@@ -31,8 +31,8 @@ pipeline {
                         def dockerImage = docker.image("${env.DOCKER_HUB_REPO}:${env.BUILD_NUMBER}")
 
                         // Tag the Docker image correctly for Docker Hub
-                        dockerImage.tag("${env.DOCKER_HUB_REPO}:${env.BUILD_NUMBER}")
-                        dockerImage.tag("${env.DOCKER_HUB_REPO}:latest")
+                        dockerImage.tag("${env.DOCKER_HUB_REPO}:${env.BUILD_NUMBER}", "${env.BUILD_NUMBER}")
+                        dockerImage.tag("${env.DOCKER_HUB_REPO}:latest", "latest")
 
                         // Push the Docker image to Docker Hub
                         dockerImage.push()
