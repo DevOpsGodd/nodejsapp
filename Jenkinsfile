@@ -31,7 +31,7 @@ pipeline {
                         def dockerImage = docker.image("${env.IMAGE_NAME}:${env.BUILD_NUMBER}")
 
                         // Push the Docker image to Docker Hub
-                        dockerImage.push("${env.DOCKER_HUB_REPO}:${env.BUILD_NUMBER}")
+                        dockerImage.push("${env.DOCKER_HUB_REPO}/${env.BUILD_NUMBER}")
                         dockerImage.push("${env.DOCKER_HUB_REPO}:latest")
                     }
                 }
