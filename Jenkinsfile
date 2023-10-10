@@ -28,11 +28,14 @@ pipeline {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
                         // Define the Docker image you want to push
-                        def dockerImage = docker.image("${env.IMAGE_NAME}/${env.BUILD_NUMBER}")
+                        def dockerImage = docker.image("${env.DOCKER_HUB_REPO}:${env.BUILD_NUMBER}")
+
+                        // Tag the Docker image correctly for Docker Hub
+                        dockerImage.tag("${env.DOCKER_HUB_REPO}:${env.BUILD_NUMBER}")
+                        dockerImage.tag("${env.DOCKER_HUB_REPO}:latest")
 
                         // Push the Docker image to Docker Hub
-                        dockerImage.push("${env.DOCKER_HUB_REPO}/${env.BUILD_NUMBER}")
-                        dockerImage.push("${env.DOCKER_HUB_REPO}:latest")
+                        dockerImage.push()
                     }
                 }
             }
