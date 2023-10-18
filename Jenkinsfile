@@ -21,7 +21,7 @@ pipeline {
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'credentials') {
                         // Define the Docker image you want to push
                         def dockerImage = docker.image("${env.IMAGE_NAME}:${env.BUILD_NUMBER}")
 
