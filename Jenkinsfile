@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image
-                    def dockerImage = docker.build("${env.IMAGE_NAME}:${env.BUILD_NUMBER}", "--build-arg NODEJS_VERSION=${env.NODEJS_VERSION} -f ${env.DOCKERFILE_PATH} .")
+                    def dockerImage = docker.build("${env.DOCKER_HUB_REPO}", "--build-arg NODEJS_VERSION=${env.NODEJS_VERSION} -f ${env.DOCKERFILE_PATH} .")
                 }
             }
         }
@@ -21,13 +21,12 @@ pipeline {
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'credentials') {
+                    docker.withRegistry('https://index.docker.io/v1/', 'credentials') {
                         // Define the Docker image you want to push
-                        def dockerImage = docker.image("${env.IMAGE_NAME}")
+                        def dockerImage = docker.image("${env.DOCKER_HUB_REPO}")
 
                         // Push the Docker image to Docker Hub
-                        dockerImage.push("${env.DOCKER_HUB_REPO}")
-                        dockerImage.push("${env.DOCKER_HUB_REPO}:latest")
+                        dockerImage.push()
                     }
                 }
             }
