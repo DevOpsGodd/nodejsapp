@@ -35,22 +35,7 @@ pipeline {
         stage('Deploy to Remote Server') {
             steps {
                 script {
-                    def remoteServer = 'ec2-18-144-48-99.us-west-1.compute.amazonaws.com'
-                    def remoteUser = 'ubuntu' // Replace with your SSH username
-                    def privateKeyFile = '/user/ubuntu/nodejs.pem' // Replace with the path to your .pem file
-
-                    // SSH into the remote server using the private key
-                    sshCommand remote: [
-                        host: remoteServer,
-                        user: remoteUser,
-                        identityFile: privateKeyFile
-                    ], command: '''
-                        # Copy the Bash script to the remote server
-                        scp -i ${privateKeyFile} /user/ubuntu/bash.sh ${remoteUser}@${remoteServer}:/home/ubuntu/
-
-                        # Log in to the remote server and execute the script
-                        ssh -i ${privateKeyFile} ${remoteUser}@${remoteServer} 'bash /home/ubuntu/bash.sh'
-                    '''
+		    sh "ssh -i /user/ubuntu/nodejs.pem ubuntu@ec2-18-144-48-99.us-west-1.compute.amazonaws.com 'docker pull uthycloud/nodejs-app:latest && docker run -d --name node-app uthycloud/nodejs-app:latest'"
                 }
             }
         }
