@@ -35,7 +35,7 @@ pipeline {
         stage('Deploy to Remote Server') {
             steps {
                 script {
-		    sh "ssh -i /user/ubuntu/nodejs.pem ubuntu@ec2-18-144-48-99.us-west-1.compute.amazonaws.com 'docker pull uthycloud/nodejs-app:latest && docker run -d --name node-app uthycloud/nodejs-app:latest'"
+		    sh "ssh -i /home/ubuntu/nodejs.pem ubuntu@ec2-18-144-48-99.us-west-1.compute.amazonaws.com 'docker pull uthycloud/nodejs-app:latest && docker run -d --name node-app uthycloud/nodejs-app:latest'"
                 }
             }
         }
